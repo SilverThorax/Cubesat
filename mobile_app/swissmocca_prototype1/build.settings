@@ -1,0 +1,29 @@
+settings = {
+	iphone = {
+		plist = {
+			UIAppFonts = {
+			},
+			UIPrerenderedIcon = true,
+			CFBundleIconFiles = 
+			{
+				
+			},
+		},
+	},
+        orientation =
+        {
+                default = "portrait",
+                supported =
+                {
+                        "portrait", "portraitUpsideDown",
+                },
+        },
+	androidPermissions = {
+		"android.permission.INTERNET",
+		"android.permission.ACCESS_FINE_LOCATION",
+	},
+	android = {
+		versionCode = "1",
+		versionName = "1.0",
+	}
+}
