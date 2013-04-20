@@ -1,0 +1,13 @@
+""" Save user..
+"""
+import json
+import uuid
+from aspen import Response
+from dblayer import user
+
+[----]
+if GET:
+	userdbentry = user.get(path["email"])
+	# Remove our internal id...
+	del userdbentry["_id"]
+	response.body = userdbentry

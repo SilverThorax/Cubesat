@@ -1,0 +1,26 @@
+""" Save user..
+"""
+import json
+import uuid
+from aspen import Response
+import dblayer
+from dblayer import user
+import pymongo
+from pymongo.errors import DuplicateKeyError
+
+[----]
+if POST:
+	userdata = json.loads(request.body.raw)
+	# Create uuid...
+	userid = str(uuid.uuid1())
+	userdata["userId"] = userid
+	try: 
+		user.save(userdata)
+	except DuplicateKeyError:
+		raise Response(409)
+
+	response.body = { "userId": userid }
+if DELETE:
+	userdata = json.loads(request.body.raw)
+	user.remove(userdata["eMail"])
+	response.body = { "errorCode": 0, "errorCode": 0 }
