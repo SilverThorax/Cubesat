@@ -6,7 +6,7 @@ element json {
   attribute objects { 'json' },
   attribute arrays { 'sateliteNames' },
   element sateliteNames {
-    for $n in /sat/@name
+    for $n in db:open('satdata')/sat/@name
     return
     element value { $n/data() }
   }
