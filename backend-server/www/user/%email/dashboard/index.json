@@ -1,0 +1,25 @@
+""" Save Dashboard on POST
+"""
+import json
+import uuid
+from aspen import Response
+import dblayer
+from dblayer import dashboard
+from dblayer import user
+import pymongo
+from pymongo.errors import DuplicateKeyError
+
+[----]
+# Make sure user exits:
+userdbentry = user.get(path["email"])
+if userdbentry is None:
+	raise Response(404)
+	
+if POST:
+	dashboarddata = json.loads(request.body.raw)
+	dashboarddata["user"] = path["email"]
+	try: 
+		dashboard.save(dashboarddata)
+	except DuplicateKeyError:
+		raise Response(409)
+

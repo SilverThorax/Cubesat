@@ -1,0 +1,24 @@
+""" Save user..
+"""
+import json
+import uuid
+from aspen import Response
+import dblayer
+from dblayer import dashboard
+from dblayer import user
+import pymongo
+from pymongo.errors import DuplicateKeyError
+
+[----]
+# Make sure user exits:
+userdbentry = user.get(path["email"])
+if userdbentry is None:
+	raise Response(404)
+if GET:
+	# Response...
+	dashboardlist = []
+	for dashboarddata in dashboard.list(path["email"]):
+		del dashboarddata["_id"]
+		del dashboarddata["user"]
+		dashboardlist.append(dashboarddata)
+	response.body = dashboardlist
