@@ -14,6 +14,7 @@ W,H = display.viewableContentWidth, display.viewableContentHeight
 hW,hH = W*.5, H*.5
 oX,oY = display.screenOriginX, display.screenOriginY
 
+local charts = require("charts")
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
@@ -22,6 +23,62 @@ function scene:createScene( event )
 	--	CREATE display objects and add them to 'group' here.
 	--	Example use-case: Restore 'group' from previously saved state.
 	-----------------------------------------------------------------------------
+	
+	local bg = display.newRect( group, oX, oY, W, H )
+	bg:setFillColor( 0, 60, 60 )
+	
+	
+	datasets = {
+		function()
+			local options = {
+				barThickness = 10, -- default 12
+				width = W*.6, -- alike -- WARNING n'inclut pas les axes. leurs libellés, et les légendes. On ne parle que du "canevas"
+				height = 400, -- alike -- WARNING n'inclut pas les axes. leurs libellés, et les légendes. On ne parle que du "canevas"
+				hAxis = {
+					title = 'Time', -- alike
+				},
+				vAxis = {
+					--title = 'life parameters', -- alike
+					minValue = -5,
+					maxValue = 20,
+				},
+				axisTitlesPosition = 'out', -- todo
+				canvasColor = {255,255,255,60}, -- libspecific
+			}
+			local data = charts.newDataTable()
+			data.addColumn( "string", "timestamp" )
+			data.addColumn( "number", "HK_EPS_LR_COM" )
+			data.addColumn( "number", "HK_EPS_LR_ADCS" )
+			data.addColumn( "number", "HK_EPS_LR_CDMS" )
+			data.addColumn( "number", "HK_EPS_LR_PL" )
+			data.addColumn( "number", "HK_EPS_BAT1_1_V" )
+			data.addRows( {
+				{ 1254919329367, 1.8, nil, 6, nil, 8 },
+				{ 1254835956727, 2.7, 5.4, 3, 2, 4 },
+				{ 1254829817287, 4, 2.4, 8, 3.4, 3 },
+				{ 1254740605880, 4.7, 2.1, 2, 6, 2 },
+				{ 1254740581690, 4.5, 1.6, 1, 9.4, 1 },
+				{ 1254740557343, 3.8, 0.7, 0.6, 8, 0.5 },
+			} )
+			return data, options
+		end,
+
+	}
+
+	local allCharts = {}
+	local yOffset = 0
+	for k,v in pairs(datasets) do
+		if k > 1 then
+			yOffset = yOffset + allCharts[k-1].height + H*.05
+		end
+		local c = charts.newColumnChart( v() )
+		c.x, c.y = W*.1, H*.1 + yOffset
+		allCharts[k] = c
+		
+		group:insert(c)
+		
+	end
+	
 	
 end
 

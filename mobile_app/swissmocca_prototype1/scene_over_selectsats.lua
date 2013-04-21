@@ -9,6 +9,7 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 
 local skin = require "utils_skin"
+local localdb = require "local-storage"
 local sett = storyboard.settings
 
 W,H = display.viewableContentWidth, display.viewableContentHeight
@@ -28,14 +29,34 @@ function scene:createScene( event )
 	local bg = display.newRect( group, oX, oY, W, H )
 	bg:setFillColor( 0, 100, 255 )
 	
-	local sat1 = skin.getSatelliteToggleButton( nil, function() print("on") end, function() print("OFF") end )
-	sat1.x, sat1.y = 400, 300
-	group:insert(sat1)
-	
+	local r,c = 0,0
+	for k,v in pairs( localdb.getCraftsList() ) do
+		local sat = skin.getSatelliteToggleButton(
+			v,
+			function()
+				storyboard.currentSelection.sats[v.name] = true
+				--print("on")
+			end,
+			function()
+				storyboard.currentSelection.sats[v.name] = false
+				--print("OFF")
+			end
+		)
+		if storyboard.currentSelection.sats[v.name] then
+			sat.toggle( false )
+		end
+		sat.x, sat.y = 40 + c*(sat.width+5), 40+r*(sat.height+5)
+		c = c+1
+		if 40 + c*(sat.width+5) -5+ 40 > W then
+			r=r+1
+			c=0
+		end
+		group:insert(sat)
+	end
 	
 	local doneSelectingSatsButton = function()
 		local button = widget.newButton{
-			label = "Done selecting sats",
+			label = "Done selecting",
 			width = 400,
 			font = "Arial",
 			fontSize = 28,

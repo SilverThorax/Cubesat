@@ -16,3 +16,5 @@ mobile_app/swissmocca_prototype1/CiderDebugger.lua
 backend-server/database/
 
 .DS_Store
+
+mobile_app/swissmocca_prototype1/charts.lua

@@ -16,7 +16,7 @@ function M.getData( satsList, metricsList, timeFrom, timeTo, callback )
 		if ( event.isError ) then
                 print( "Network error!")
         else
-                print ( "RESPONSE: " .. event.response )
+                --print ( "RESPONSE: " .. event.response )
 				callback( event )
         end
 	end )

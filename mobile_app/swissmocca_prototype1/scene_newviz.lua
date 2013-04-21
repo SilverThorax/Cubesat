@@ -45,6 +45,46 @@ function scene:createScene( event )
 	end
 	selectSatsButton()
 	
+	
+	
+	local selectMetricsButton = function()
+		local button = widget.newButton{
+			label = "Select metrics",
+			width = 200,
+			font = "Arial",
+			fontSize = 28,
+			labelColor = { default = {0,0,0}, over = {255,255,255} },
+			onEvent = function( event )
+				if event.phase == "ended" then
+					storyboard.showOverlay( "scene_over_selectmetrics", { effect = "fromRight", time = sett.showOverlayTime, isModal = true } )
+				end
+			end
+		}
+		group:insert( button )
+		button.x, button.y = 400, 300
+	end
+	selectMetricsButton()
+	
+	
+	
+	local visualizeSelectionButton = function()
+		local button = widget.newButton{
+			label = "Visualize",
+			width = 200,
+			font = "Arial",
+			fontSize = 28,
+			labelColor = { default = {0,0,0}, over = {255,255,255} },
+			onEvent = function( event )
+				if event.phase == "ended" then
+					storyboard.gotoScene( "scene_viz", { effect = "slideLeft", time = sett.gotoSceneTime } )
+				end
+			end
+		}
+		group:insert( button )
+		button.x, button.y = 400, 600
+	end
+	visualizeSelectionButton()
+	
 end
 
 -- Called immediately after scene has moved onscreen:

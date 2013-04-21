@@ -8,12 +8,15 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
+local skin = require "utils_skin"
+local localdb = require "local-storage"
 local sett = storyboard.settings
 
 W,H = display.viewableContentWidth, display.viewableContentHeight
 hW,hH = W*.5, H*.5
 oX,oY = display.screenOriginX, display.screenOriginY
 
+local widget = require "widget"
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
@@ -22,6 +25,52 @@ function scene:createScene( event )
 	--	CREATE display objects and add them to 'group' here.
 	--	Example use-case: Restore 'group' from previously saved state.
 	-----------------------------------------------------------------------------
+	
+	local bg = display.newRect( group, oX, oY, W, H )
+	bg:setFillColor( 100, 0, 255 )
+	
+	local r,c = 0,0
+	for k,v in pairs( localdb.getMetricsList() ) do
+		local but = skin.getMetricToggleButton(
+			v,
+			function()
+				storyboard.currentSelection.metrics[v] = true
+				--print("on")
+			end,
+			function()
+				storyboard.currentSelection.metrics[v] = false
+				--print("OFF")
+			end
+		)
+		if storyboard.currentSelection.metrics[v] then
+			but.toggle( false )
+		end
+		but.x, but.y = 40 + c*(but.width+5), 40+r*(but.height+5)
+		c = c+1
+		if 40 + c*(but.width+5) -5+ 40 > W then
+			r=r+1
+			c=0
+		end
+		group:insert(but)
+	end
+	
+	local doneSelectingSatsButton = function()
+		local button = widget.newButton{
+			label = "Done selecting",
+			width = 400,
+			font = "Arial",
+			fontSize = 28,
+			labelColor = { default = {0,0,0}, over = {255,255,255} },
+			onEvent = function( event )
+				if event.phase == "ended" then
+					storyboard.hideOverlay( true, "slideRight", sett.hideOverlayTime )
+				end
+			end
+		}
+		group:insert( button )
+		button.x, button.y = 400, 700
+	end
+	doneSelectingSatsButton()
 	
 end
 
