@@ -76,12 +76,13 @@ function M.createDashboard(user, newdashboard)
 end
 
 
-function M.listDashboards(user)
+function M.listDashboards(user, callback)
 	network.request( M.serverAddress .. "/user/" .. user .. "/dashboard/list/", "GET", function( event )
 		if ( event.isError ) then
                 print( "Network error!")
         else
                 print ( "RESPONSE: " .. event.response )
+				callback(json.decode(event.response))
         end
 	end )
 end
