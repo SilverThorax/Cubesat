@@ -1,4 +1,4 @@
-require "CiderDebugger";
+-- require "CiderDebugger";
 -- hide device status bar
 display.setStatusBar( display.HiddenStatusBar )
 
