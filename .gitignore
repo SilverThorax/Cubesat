@@ -9,9 +9,10 @@ mobile_app/sandbox/swissmocca_pdfview/CiderDebugger.lua
 
 mobile_app/swissmocca_prototype1/CiderDebugger.lua
 
-
 # Ignore compiled Python stuff..
 *.pyc
 
 # Don't commit the database!
 backend-server/database/
+
+.DS_Store
