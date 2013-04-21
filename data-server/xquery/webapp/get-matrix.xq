@@ -31,7 +31,7 @@ if ($allowed-columns = $columns-loc) then
         element { 'time' || convert:dateTime-to-integer($time) } {
           for $value in $val
           return
-          element { $value/name() } { $value/data() }
+          element { '' || replace($value/name(), '_', '__') } { $value/data() }
         }
     }
   }
