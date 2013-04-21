@@ -9,5 +9,15 @@ from dblayer import user
 if GET:
 	userdbentry = user.get(path["email"])
 	# Remove our internal id...
+	if userdbentry is None:
+		raise Response(404)
 	del userdbentry["_id"]
 	response.body = userdbentry
+
+if DELETE:
+	ret = { "errorCode": 0, "errorMessage": "" }
+	if not user.remove(path["email"]):
+		ret["errorCode"] = 1
+		ret["errorMessage"] = "Not found"
+		raise Response(404)
+	response.body = ret

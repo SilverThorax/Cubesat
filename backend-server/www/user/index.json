@@ -22,5 +22,9 @@ if POST:
 	response.body = { "userId": userid }
 if DELETE:
 	userdata = json.loads(request.body.raw)
-	user.remove(userdata["eMail"])
-	response.body = { "errorCode": 0, "errorCode": 0 }
+	ret = { "errorCode": 0, "errorMessage": "" }
+	if not user.remove(userdata["eMail"]):
+		ret["errorCode"] = 1
+		ret["errorMessage"] = "Not found"
+		raise Response(404)
+	response.body = ret

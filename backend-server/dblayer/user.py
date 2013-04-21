@@ -1,6 +1,7 @@
 """ SwissMOCCA User database layer.
 """
 import pymongo
+import pprint
 from pymongo import MongoClient
 
 client = MongoClient()
@@ -18,6 +19,10 @@ def get(email):
 	return users.find_one({"eMail": email})
 
 def remove(email):
-	users.remove({"eMail": email})
+	doc = users.remove({"eMail": email})
+	return doc["n"] == 1
+
+def list():
+	return users.find()
 
 
