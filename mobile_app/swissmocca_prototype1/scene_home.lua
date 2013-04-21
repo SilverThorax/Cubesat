@@ -9,6 +9,9 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 local sett = storyboard.settings
 
+req_users = require "requests-users"
+
+
 W,H = display.viewableContentWidth, display.viewableContentHeight
 hW,hH = W*.5, H*.5
 oX,oY = display.screenOriginX, display.screenOriginY
@@ -50,16 +53,16 @@ function scene:createDashboardsGrid()
 	local group = self.view
 	
 	local r,c = 0,0
-	local nbcols = 8
-	local bsize = (W-20)/nbcols
+	local nbcols = 3
+	local bsize = (W-20) / nbcols
 	
-	local yOff = 250
+	local yOff = 150
 	
-	local newbutton = function()
+	local newbutton = function(label)
 		local button = widget.newButton{
-			label = "...",
-			width = bsize,
-			height = bsize,
+			label = label,
+			width = bsize - 10,
+			height = bsize - 10,
 			font = "Arial",
 			fontSize = 28,
 			labelColor = { default = {0,0,0}, over = {255,255,255} },
@@ -83,8 +86,8 @@ function scene:createDashboardsGrid()
 	local createNewVizbutton = function()
 		local button = widget.newButton{
 			label = "New",
-			width = bsize,
-			height = bsize,
+			width = bsize - 10,
+			height = bsize - 10,
 			font = "Arial",
 			fontSize = 28,
 			labelColor = { default = {0,0,0}, over = {255,255,255} },
@@ -105,34 +108,11 @@ function scene:createDashboardsGrid()
 	end
 	
 	createNewVizbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
-	newbutton()
+	req_users.listDashboards("test@mail.com", function(data) 
+		for i,v in pairs (data) do
+			newbutton(v["name"])
+		end
+	end)
 	
 end
 
@@ -147,7 +127,7 @@ function scene:createScene( event )
 	local bg = display.newImageRect( group, "SwissCube-10-White-NOLOGO.jpg", 700, 247 )
 	bg.xScale = 1.1
 	bg.yScale = 1.1
-	bg.x, bg.y = hW, bg.height*.5
+	bg.x, bg.y = hW, bg.height*.1
 	
 	scene:createStaticButtons()
 	

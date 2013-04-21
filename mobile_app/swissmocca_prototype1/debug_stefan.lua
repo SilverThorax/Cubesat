@@ -44,5 +44,5 @@ req_users.createDashboard("test@mail4.com", {
 	}
 })
 		
-req_users.listDashboards("test@mail4.com")
+req_users.listDashboards("test@mail4.com", function(event) end)
 

@@ -45,6 +45,9 @@ function scene:createScene( event )
 					storyboard.hideOverlay( true, "slideRight", sett.hideOverlayTime )
 				end
 			end
+			onRender = function (event)
+				print "Gaga"
+			end
 		}
 		group:insert( button )
 		button.x, button.y = 400, 700
