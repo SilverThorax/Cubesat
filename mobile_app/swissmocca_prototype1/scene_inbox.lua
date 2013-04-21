@@ -8,6 +8,12 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
+local sett = storyboard.settings
+
+W,H = display.viewableContentWidth, display.viewableContentHeight
+hW,hH = W*.5, H*.5
+oX,oY = display.screenOriginX, display.screenOriginY
+
 local widget = require "widget"
 
 -- Called when the scene's view does not exist:

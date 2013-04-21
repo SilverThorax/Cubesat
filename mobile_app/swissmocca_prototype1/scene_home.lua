@@ -7,9 +7,11 @@ local scene = storyboard.newScene()
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
+local sett = storyboard.settings
 
 W,H = display.viewableContentWidth, display.viewableContentHeight
 hW,hH = W*.5, H*.5
+oX,oY = display.screenOriginX, display.screenOriginY
 
 local widget = require "widget"
 
@@ -25,7 +27,9 @@ function scene:createStaticButtons()
 			fontSize = 13,
 			labelColor = { default = {0,0,0}, over = {255,255,255} },
 			onEvent = function( event )
-				storyboard.gotoScene( "scene_"..screenname )
+				if event.phase == "ended" then
+					storyboard.gotoScene( "scene_"..screenname )
+				end
 			end
 		}
 		group:insert( button )
@@ -53,14 +57,17 @@ function scene:createDashboardsGrid()
 	
 	local newbutton = function()
 		local button = widget.newButton{
-			label = "VIZ...",
+			label = "...",
 			width = bsize,
 			height = bsize,
 			font = "Arial",
 			fontSize = 28,
 			labelColor = { default = {0,0,0}, over = {255,255,255} },
 			onEvent = function( event )
-				--storyboard.gotoScene( "scene_"..screenname )
+				if event.phase == "ended" then
+					storyboard.currentVizualisation = nil
+					storyboard.gotoScene( "scene_viz" )
+				end
 			end
 		}
 		group:insert( button )
@@ -73,6 +80,31 @@ function scene:createDashboardsGrid()
 		lastY = button.y
 	end
 	
+	local createNewVizbutton = function()
+		local button = widget.newButton{
+			label = "New",
+			width = bsize,
+			height = bsize,
+			font = "Arial",
+			fontSize = 28,
+			labelColor = { default = {0,0,0}, over = {255,255,255} },
+			onEvent = function( event )
+				if event.phase == "ended" then
+					storyboard.gotoScene( "scene_newviz", { effect = "slideLeft", time = sett.gotoSceneTime } )
+				end
+			end
+		}
+		group:insert( button )
+		button.x, button.y = 10 + c*bsize + button.width*.5, yOff + r*bsize + button.height*1 + 10
+		c = c+1
+		if c >= nbcols then
+			c = 0
+			r = r+1
+		end
+		lastY = button.y
+	end
+	
+	createNewVizbutton()
 	newbutton()
 	newbutton()
 	newbutton()

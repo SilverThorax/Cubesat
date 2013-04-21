@@ -8,6 +8,7 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
+local skin = require "utils_skin"
 local sett = storyboard.settings
 
 W,H = display.viewableContentWidth, display.viewableContentHeight
@@ -25,25 +26,30 @@ function scene:createScene( event )
 	-----------------------------------------------------------------------------
 	
 	local bg = display.newRect( group, oX, oY, W, H )
-	bg:setFillColor( 0, 0, 255 )
+	bg:setFillColor( 0, 100, 255 )
 	
-	local selectSatsButton = function()
+	local sat1 = skin.getSatelliteToggleButton( nil, function() print("on") end, function() print("OFF") end )
+	sat1.x, sat1.y = 400, 300
+	group:insert(sat1)
+	
+	
+	local doneSelectingSatsButton = function()
 		local button = widget.newButton{
-			label = "Select sats",
-			width = 200,
+			label = "Done selecting sats",
+			width = 400,
 			font = "Arial",
 			fontSize = 28,
 			labelColor = { default = {0,0,0}, over = {255,255,255} },
 			onEvent = function( event )
 				if event.phase == "ended" then
-					storyboard.showOverlay( "scene_over_selectsats", { effect = "fromRight", time = sett.showOverlayTime, isModal = true } )
+					storyboard.hideOverlay( true, "slideRight", sett.hideOverlayTime )
 				end
 			end
 		}
 		group:insert( button )
-		button.x, button.y = 400, 200
+		button.x, button.y = 400, 700
 	end
-	selectSatsButton()
+	doneSelectingSatsButton()
 	
 end
 
@@ -53,8 +59,6 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
 	-----------------------------------------------------------------------------
-	
-	
 	
 end
 

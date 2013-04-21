@@ -49,6 +49,19 @@ end
 
 -- Etc. TODO...
 
+function M.getCraftsList()
+	return M.localData.crafts
+end
+
+function M.getMetricsList()
+	return M.localData.metrics
+end
+
+--function M.getUsersList()
+function M.getAllUsers()
+	return M.localData.users
+end
+
 return M
 
 

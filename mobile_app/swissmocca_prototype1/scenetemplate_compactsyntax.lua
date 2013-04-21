@@ -8,13 +8,13 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
+local skin = require "utils_skin"
 local sett = storyboard.settings
 
 W,H = display.viewableContentWidth, display.viewableContentHeight
 hW,hH = W*.5, H*.5
 oX,oY = display.screenOriginX, display.screenOriginY
 
-local widget = require "widget"
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
@@ -24,27 +24,6 @@ function scene:createScene( event )
 	--	Example use-case: Restore 'group' from previously saved state.
 	-----------------------------------------------------------------------------
 	
-	local bg = display.newRect( group, oX, oY, W, H )
-	bg:setFillColor( 0, 0, 255 )
-	
-	local selectSatsButton = function()
-		local button = widget.newButton{
-			label = "Select sats",
-			width = 200,
-			font = "Arial",
-			fontSize = 28,
-			labelColor = { default = {0,0,0}, over = {255,255,255} },
-			onEvent = function( event )
-				if event.phase == "ended" then
-					storyboard.showOverlay( "scene_over_selectsats", { effect = "fromRight", time = sett.showOverlayTime, isModal = true } )
-				end
-			end
-		}
-		group:insert( button )
-		button.x, button.y = 400, 200
-	end
-	selectSatsButton()
-	
 end
 
 -- Called immediately after scene has moved onscreen:
@@ -53,8 +32,6 @@ function scene:enterScene( event )
 	-----------------------------------------------------------------------------
 	--	INSERT code here (e.g. start timers, load audio, start listeners, etc.)
 	-----------------------------------------------------------------------------
-	
-	
 	
 end
 

@@ -9,5 +9,11 @@ widget = require "widget"
 require "debug_stefan"
 require "debug_marek"
 
+storyboard.settings = {
+	showOverlayTime = 200,
+	hideOverlayTime = 120,
+	gotoSceneTime = 240,
+}
+
 storyboard.gotoScene("scene_home")
 --storyboard.gotoScene("scene_inbox")

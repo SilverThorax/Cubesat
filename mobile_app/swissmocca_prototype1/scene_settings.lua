@@ -8,6 +8,14 @@ local scene = storyboard.newScene()
 -- BEGINNING OF YOUR IMPLEMENTATION
 ---------------------------------------------------------------------------------
 
+local sett = storyboard.settings
+
+W,H = display.viewableContentWidth, display.viewableContentHeight
+hW,hH = W*.5, H*.5
+oX,oY = display.screenOriginX, display.screenOriginY
+
+local widget = require "widget"
+
 function scene:refreshListOfSatellites()
 	
 	-- TODO: store in database
@@ -23,6 +31,20 @@ function scene:createScene( event )
 	--	CREATE display objects and add them to 'group' here.
 	--	Example use-case: Restore 'group' from previously saved state.
 	-----------------------------------------------------------------------------
+	
+	local backButton = widget.newButton{
+		label = "back",
+		width = 90,
+		height = 35,
+		font = "Arial",
+		fontSize = 13,
+		labelColor = { default = {0,0,0}, over = {255,255,255} },
+		onEvent = function( event )
+			storyboard.gotoScene( "scene_home" )
+		end
+	}
+	group:insert( backButton )
+	backButton.x, backButton.y = 10 + backButton.width*.5, 10 + backButton.height*.5
 	
 end
 
@@ -41,20 +63,6 @@ function scene:exitScene( event )
 	-----------------------------------------------------------------------------
 	--	INSERT code here (e.g. stop timers, remove listeners, unload sounds, etc.)
 	-----------------------------------------------------------------------------
-	
-	local backButton = widget.newButton{
-		label = "back",
-		width = 90,
-		height = 35,
-		font = "Arial",
-		fontSize = 13,
-		labelColor = { default = {0,0,0}, over = {255,255,255} },
-		onEvent = function( event )
-			storyboard.gotoScene( "scene_home" )
-		end
-	}
-	group:insert( backButton )
-	backButton.x, backButton.y = 10 + backButton.width*.5, 10 + backButton.height*.5
 	
 end
 
