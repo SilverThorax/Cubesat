@@ -1,0 +1,18 @@
+""" Save user..
+"""
+import json
+import uuid
+from aspen import Response
+import dblayer
+from dblayer import user
+import pymongo
+from pymongo.errors import DuplicateKeyError
+
+[----]
+if GET:
+	# Response...
+	userdblist = []
+	for userdb in user.list():
+		del userdb["_id"]
+		userdblist.append(userdb)
+	response.body = userdblist
