@@ -21,28 +21,22 @@ req_users.getAllUsers()
 req_users.createUser({ 
 		firstName = "Stefan", 
 		lastName = "Agner", 
-		eMail = "test@mail4.com" })
+		eMail = "test@mail.com" })
 
 		
-req_users.createDashboard("test@mail4.com", {
-	name= "New Dashboard 4",
-	satellites = {
-		{
-			name = "Sat1",
-			metrics = {
-				{ name= "TEMP" },
-				{ name= "BAT" }
-			}
-		},
-		{
-			name = "Sat2",
-			metrics = {
-				{ name= "TEMP" },
-				{ name= "BAT" }
-			}
-		}
+req_users.createDashboard("test@mail.com", {
+	name= "Another Dashboard 2",
+	satellites= {
+	{
+		name= "Sat1",
+		metrics= { "HK_EPS_LR_COM","HK_EPS_LR_ADCS","HK_EPS_LR_CDMS" }
+	},
+	{
+		name= "Sat2",
+		metrics= { "HK_EPS_LR_COM","HK_EPS_LR_ADCS","HK_EPS_LR_CDMS" }
+	}
 	}
 })
 		
-req_users.listDashboards("test@mail4.com", function(event) end)
+req_users.listDashboards("test@mail.com", function(event) end)
 
